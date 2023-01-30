@@ -1,0 +1,238 @@
+
+-- Instances:
+
+local DropHatsGUI = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Drop = Instance.new("TextButton")
+local GuiName = Instance.new("TextLabel")
+local Close = Instance.new("TextButton")
+local Credits = Instance.new("TextLabel")
+
+--Properties:
+
+DropHatsGUI.Name = "DropHatsGUI"
+DropHatsGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+DropHatsGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = DropHatsGUI
+Frame.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
+Frame.Position = UDim2.new(0.0601092875, 0, 0.228404075, 0)
+Frame.Size = UDim2.new(0, 173, 0, 113)
+--Frame.Name = "DropHatsGUI"
+
+Drop.Name = "Drop"
+Drop.Parent = Frame
+Drop.BackgroundColor3 = Color3.fromRGB(209, 209, 209)
+Drop.Position = UDim2.new(0.0982658938, 0, 0.274336278, 0)
+Drop.Size = UDim2.new(0, 139, 0, 50)
+Drop.Font = Enum.Font.FredokaOne
+Drop.Text = "Drop"
+Drop.TextColor3 = Color3.fromRGB(0, 0, 0)
+Drop.TextScaled = true
+Drop.TextSize = 14.000
+Drop.TextWrapped = true
+Drop.MouseButton1Click:Connect(function()
+
+	local netboost = Vector3.new(0, 45, 0)
+
+	local ws = game:GetService("Workspace") 
+	local rs = game:GetService("RunService")
+	local lp = game:GetService("Players").LocalPlayer
+
+	local function align(Part0, Part1)
+		Part0.CustomPhysicalProperties = PhysicalProperties.new(0.0001, 0.0001, 0.0001, 0.0001, 0.0001)
+
+		local att1 = Instance.new("Attachment")
+		att1.Orientation = Vector3.new(0, 0, 0)
+		att1.Position = Vector3.new(0, 0, 0)
+		att1.Archivable = true
+		local att0 = att1:Clone()
+
+		local ap = Instance.new("AlignPosition", att0)
+		ap.ApplyAtCenterOfMass = false
+		ap.MaxForce = math.huge
+		ap.MaxVelocity = math.huge
+		ap.ReactionForceEnabled = false
+		ap.Responsiveness = 200
+		ap.RigidityEnabled = false
+
+		local ao = Instance.new("AlignOrientation", att0)
+		ao.MaxAngularVelocity = math.huge
+		ao.MaxTorque = math.huge
+		ao.PrimaryAxisOnly = false
+		ao.ReactionTorqueEnabled = false
+		ao.Responsiveness = 200
+		ao.RigidityEnabled = false
+
+		ap.Attachment1 = att1
+		ap.Attachment0 = att0
+		ao.Attachment1 = att1
+		ao.Attachment0 = att0
+
+		att1.Parent = Part1
+		att0.Parent = Part0
+
+
+		if netboost then
+			spawn(function()
+				while rs.Heartbeat:Wait() and Part0 and Part0.Parent do
+					Part0.Velocity = netboost
+				end
+			end)
+			spawn(function()
+				while rs.Stepped:Wait() and Part0 and Part0.Parent and Part1 and Part1.Parent do
+					Part0.Velocity = Part1.Velocity
+				end
+			end)
+		end
+	end
+	local c = lp.Character
+	local function gp(parent, name, className)
+		local ret = nil
+		if parent then
+			for i, v in pairs(parent:GetChildren()) do
+				if (v.Name == name) and v:IsA(className) then
+					ret = v
+				end
+			end
+		end
+		return ret
+	end
+	local startpart = gp(c, "Torso", "BasePart") or gp(c, "HumanoidRootPart", "BasePart") or gp(c, "Head", "BasePart")
+	if not startpart then
+		print("part not found")
+		return
+	end
+	local size = Vector3.new(3.961, 2.40725, 5.62763)
+	local orient = {
+		Vector3.new(0 ,0, 0),
+	}
+	local hats = {}
+	for i, v in pairs(c:GetChildren()) do
+		if v:IsA("Accessory") then
+			table.insert(hats, v)
+		end
+	end
+	local allhandles = {}
+	for i, v in pairs(hats) do
+		local handle = gp(v, "Handle", "BasePart")
+		if handle then
+			table.insert(allhandles, handle)
+		end
+	end
+	local handles = {}
+	for i, v in pairs(allhandles) do
+		if v.Size == size then
+			table.insert(handles, v)
+		end
+	end
+	if #handles < #orient then
+		for i, v in pairs(allhandles) do
+			if not table.find(handles, v) then
+				table.insert(handles, v)
+			end
+			if #handles == #orient then
+				break
+			end
+		end
+	end
+	if #handles < #orient then
+		print("not enough hats")
+		return
+	end
+	local ball = Instance.new("Part", ws)
+	ball.Anchored = true
+	ball.CanCollide = false
+	ball.CanTouch = false
+	ball.Transparency = 1
+	ball.Shape = "Block"
+	ball.Size = Vector3.new(2.961, 2.40725, 2.62763)
+	ball.Position = startpart.Position
+	for i, v in pairs(orient) do
+		local handle = handles[i]
+		handle:ClearAllChildren()
+		local part = Instance.new("Part", ball)
+		part.Massless = true
+		part.Transparency = 1
+		part.Anchored = true
+		part.CanCollide = false
+		part.Position = ball.Position
+		part.Orientation = v
+		local weld = Instance.new("WeldConstraint", part)
+		weld.Part0 = ball
+		weld.Part1 = part
+		weld.Enabled = true
+		handle.Parent = part
+		align(handle, part)
+		part.Anchored = false
+		handle.Changed:Connect(function(prop)
+			if (prop == "Parent") and part and part.Parent then
+				part:Destroy()
+			end
+		end)
+	end
+	ball.CanCollide = true
+	ball.Anchored = false
+	c.Changed:Connect(function(prop)
+		if (prop == "Parent") and ball and ball.Parent then
+			ball:Destroy()
+		end
+	end)
+end)
+
+GuiName.Name = "GuiName"
+GuiName.Parent = Frame
+GuiName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GuiName.BackgroundTransparency = 1.000
+GuiName.Size = UDim2.new(0, 173, 0, 21)
+GuiName.Font = Enum.Font.SourceSans
+GuiName.Text = "FE Drop Hats"
+GuiName.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiName.TextScaled = true
+GuiName.TextSize = 14.000
+GuiName.TextWrapped = true
+
+Close.Name = "Close"
+Close.Parent = Frame
+Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Close.BackgroundTransparency = 1.000
+Close.Position = UDim2.new(0.838150263, 0, 0, 0)
+Close.Size = UDim2.new(0, 28, 0, 21)
+Close.Font = Enum.Font.SourceSans
+Close.Text = "X"
+Close.TextColor3 = Color3.fromRGB(255, 0, 0)
+Close.TextScaled = true
+Close.TextSize = 14.000
+Close.TextWrapped = true
+Close.MouseButton1Click:Connect(function()
+	DropHatsGUI:Destroy()
+end)
+
+Credits.Name = "Credits"
+Credits.Parent = Frame
+Credits.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Credits.BackgroundTransparency = 1.000
+Credits.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Credits.Position = UDim2.new(0, 0, 0.796460152, 0)
+Credits.Size = UDim2.new(0, 173, 0, 23)
+Credits.Font = Enum.Font.FredokaOne
+Credits.Text = "Made By Sx-p0t"
+Credits.TextColor3 = Color3.fromRGB(255, 255, 255)
+Credits.TextScaled = true
+Credits.TextSize = 14.000
+Credits.TextWrapped = true
+
+for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
+if v:IsA("BasePart") and v.Name ~="HumanoidRootPart" then 
+game:GetService("RunService").Heartbeat:connect(function()
+v.Velocity = Vector3.new(-30,0,0)
+end)
+end
+end
+--AntiDeleteGui (Broken):
+local player = game.Players.LocalPlayer
+local Character = player.Character or player.CharacterAdded:Wait()
+
+Character:WaitForChild("Humanoid").Died:Connect(function()
+	DropHatsGui:Clone()
+end)  
