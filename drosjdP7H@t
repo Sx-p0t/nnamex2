@@ -142,7 +142,7 @@ Drop.MouseButton1Click:Connect(function()
 		end
 	end
 	if #handles < #orient then
-		print("not enough hats")
+		print("No Hats Detected!!! ")
 		return
 	end
 	local ball = Instance.new("Part", ws)
