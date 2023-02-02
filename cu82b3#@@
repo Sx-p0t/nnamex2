@@ -137,4 +137,4 @@ Hats.Hat1.Handle.Attachment.Rotation = Vector3.new(0,0,0)
 Character:WaitForChild("Torso"):FindFirstChild("Attachment").Name = "Attachment1"
        Character:WaitForChild("Torso").Attachment1.Position = Vector3.new(0, 0, 0)    
 
--- made by Creatar#4019 aca Creatar aca RoBloit
+-- if you see this you are a skid
