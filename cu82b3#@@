@@ -50,11 +50,18 @@ game.Players.LocalPlayer.Character["Left Leg"]:Destroy()
 game.Players.LocalPlayer.Character["Torso"].Transparency = 1
 game.Players.LocalPlayer.Character.Humanoid.HipHeight = 1
 
+--[[
 for _,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
 if (v:IsA("Accessory")) then
 v.Handle.Mesh:remove()
 end
 end
+--]]
+
+local HatChar = game.Players.LocalPlayer.Character
+local Hat = HatChar:FindFirstChild("VANS_Umbrella")
+
+Hat.Handle.Mesh:Destroy()
 
 local hatid = "VANS_Umbrella" --must be wearing hat
 local hatname = game:GetObjects("rbxassetid://".. hatid)[1].Name
