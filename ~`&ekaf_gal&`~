@@ -1,0 +1,123 @@
+game:GetService("StarterGui"):SetCore("SendNotification", { 
+	Title = "FE Fake Lag";
+	Text = "Made by Sx-p0t#8992";
+	Icon = "rbxthumb://type=Asset&id=12361535956&w=150&h=150"})
+Duration = 16;
+
+-- Instances:
+
+local FakeLagGUI = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local Title = Instance.new("TextLabel")
+local UICorner_2 = Instance.new("UICorner")
+local Close = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local Start = Instance.new("TextButton")
+local UICorner_4 = Instance.new("UICorner")
+local Stop = Instance.new("TextButton")
+local UICorner_5 = Instance.new("UICorner")
+local Credits = Instance.new("TextLabel")
+local UICorner_6 = Instance.new("UICorner")
+local ts = game:GetService("TeleportService")
+local p = game:GetService("Players").LocalPlayer
+
+--Properties:
+
+FakeLagGUI.Name = "FakeLagGUI"
+--FakeLagGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+FakeLagGUI.Parent = game:GetService('CoreGui')
+FakeLagGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = FakeLagGUI
+Frame.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+Frame.Position = UDim2.new(0.365346551, 0, 0.338213742, 0)
+Frame.Size = UDim2.new(0, 272, 0, 146)
+
+UICorner.CornerRadius = UDim.new(0, 15)
+UICorner.Parent = Frame
+
+Title.Name = "Title"
+Title.Parent = Frame
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.Size = UDim2.new(0, 272, 0, 43)
+Title.Font = Enum.Font.FredokaOne
+Title.Text = "FE Fake Lag"
+Title.TextColor3 = Color3.fromRGB(0, 0, 0)
+Title.TextSize = 35.000
+Title.TextWrapped = true
+
+UICorner_2.CornerRadius = UDim.new(0, 15)
+UICorner_2.Parent = Title
+
+Close.Name = "Close"
+Close.Parent = Frame
+Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Close.Position = UDim2.new(0.819852829, 0, 0, 0)
+Close.Size = UDim2.new(0, 49, 0, 43)
+Close.Font = Enum.Font.FredokaOne
+Close.Text = "X"
+Close.TextColor3 = Color3.fromRGB(255, 0, 0)
+Close.TextSize = 35.000
+Close.TextWrapped = true
+Close.MouseButton1Click:Connect(function()
+	Frame:Destroy()
+end)
+
+UICorner_3.CornerRadius = UDim.new(0, 15)
+UICorner_3.Parent = Close
+
+Start.Name = "Start"
+Start.Parent = Frame
+Start.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Start.Position = UDim2.new(0, 0, 0.39041096, 0)
+Start.Size = UDim2.new(0, 128, 0, 50)
+Start.Font = Enum.Font.FredokaOne
+Start.Text = "Start"
+Start.TextColor3 = Color3.fromRGB(0, 0, 0)
+Start.TextSize = 40.000
+Start.MouseButton1Click:Connect(function()
+	while true do
+		game.Players.LocalPlayer.Character.Torso.Anchored = true
+		wait(0.1)
+		game.Players.LocalPlayer.Character.Torso.Anchored = false
+		wait(0.1)
+	end
+end)
+
+UICorner_4.CornerRadius = UDim.new(0, 15)
+UICorner_4.Parent = Start
+
+Stop.Name = "Stop"
+Stop.Parent = Frame
+Stop.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Stop.Position = UDim2.new(0.525735319, 0, 0.39041096, 0)
+Stop.Size = UDim2.new(0, 128, 0, 50)
+Stop.Font = Enum.Font.FredokaOne
+Stop.Text = "Stop"
+Stop.TextColor3 = Color3.fromRGB(0, 0, 0)
+Stop.TextSize = 40.000
+Stop.MouseButton1Click:Connect(function()
+	ts:Teleport(game.PlaceId, p)
+end)
+
+UICorner_5.CornerRadius = UDim.new(0, 15)
+UICorner_5.Parent = Stop
+
+Credits.Name = "Credits"
+Credits.Parent = Frame
+Credits.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Credits.Position = UDim2.new(-0.0036764706, 0, 0.863013685, 0)
+Credits.Size = UDim2.new(0, 272, 0, 20)
+Credits.Font = Enum.Font.FredokaOne
+Credits.Text = "Made by Sx-p0t"
+Credits.TextColor3 = Color3.fromRGB(0, 0, 0)
+Credits.TextScaled = true
+Credits.TextSize = 35.000
+Credits.TextWrapped = true
+
+UICorner_6.CornerRadius = UDim.new(0, 15)
+UICorner_6.Parent = Credits
+
+Frame.Active = true
+Frame.Draggable = true
