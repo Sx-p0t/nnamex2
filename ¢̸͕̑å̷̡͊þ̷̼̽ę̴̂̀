@@ -1,3 +1,11 @@
+--[[
+--Hat needed: https://www.roblox.com/catalog/6470135113/Fan-Hand-Sign-Why-Dont-We-WDW
+--Other people will see the cape as grey.
+--You can find colors here: https://htmlcolorcodes.com/roblox-color-codes/
+CapeColor = "Bright red"
+Rainbow = true -- false = Disabled, true = Enabled
+--]]
+
 game:GetService("StarterGui"):SetCore("SendNotification", { 
 	Title = "FE Cape";
 	Text = "Made by Sx-p0t#8992";
