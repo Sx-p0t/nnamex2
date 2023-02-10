@@ -1,0 +1,74 @@
+game:GetService("StarterGui"):SetCore("SendNotification", { 
+	Title = "FE Cape";
+	Text = "Made by Sx-p0t#8992";
+	Icon = "rbxthumb://type=Asset&id=12361535956&w=150&h=150"})
+Duration = 16;
+
+for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
+if v:IsA("BasePart") and v.Name ~="HumanoidRootPart" then 
+game:GetService("RunService").Heartbeat:connect(function()
+v.Velocity = Vector3.new(-30,0,0)
+end)
+end
+end
+
+player = game.Players.LocalPlayer
+char = player.Character
+vbreak = false
+
+function rotate(X,Y,Z)
+	return CFrame.Angles(math.rad(X),math.rad(Y),math.rad(Z))
+end
+
+function Join(Hat,Part,Offset,Rotation,Mesh)
+	if Mesh == false then Hat.Handle:FindFirstChildWhichIsA("SpecialMesh"):Destroy() end
+	Hat.Handle.AccessoryWeld:Destroy()
+	local method = Instance.new("RopeConstraint",player.Character)
+	method.Length = math.huge
+	method.Attachment0 = Instance.new("Attachment",char.Head)
+	method.Attachment1 = Instance.new("Attachment",Hat.Handle)
+	coroutine.wrap(function()
+		while task.wait() do
+			Hat.Handle.CFrame = (Part.CFrame + Part.CFrame.LookVector * Offset.Z + Part.CFrame.RightVector * Offset.X + Part.CFrame.UpVector * Offset.Y) * Rotation
+			if vbreak == true then break end
+		end
+	end)()
+end
+
+Join(
+	player.Character["WDW_FoamFinger"], -- the Accessory
+	player.Character.Torso, -- Part to attach to
+	Vector3.new(0,-0.3,-1), -- offset
+	rotate(-22.5,0,0), -- Rotation
+	false -- Keep mesh
+)
+
+local Cape = player.Character["WDW_FoamFinger"].Handle
+Cape.BrickColor = BrickColor.new(CapeColor)
+
+if Rainbow == true then
+	while true do
+		Cape.BrickColor = BrickColor.new("Bright violet")
+		wait(0.1)
+		Cape.BrickColor = BrickColor.new("Dark indigo")
+		wait(0.1)
+		Cape.BrickColor = BrickColor.new("Dark blue")
+		wait(0.1)
+		Cape.BrickColor = BrickColor.new("Dark green")
+		wait(0.1)
+		Cape.BrickColor = BrickColor.new("Bright yellow")
+		wait(0.1)
+		Cape.BrickColor = BrickColor.new("Flame reddish orange")
+		wait(0.1)
+		Cape.BrickColor = BrickColor.new("Really red")
+		wait(0.1)
+	end
+end
+
+--[[
+game:GetService("StarterGui"):SetCore("SendNotification", { 
+	Title = "FE Cape";
+	Text = "Made by Sx-p0t#8992";
+	Icon = "rbxthumb://type=Asset&id=12361535956&w=150&h=150"})
+Duration = 16;
+--]]
