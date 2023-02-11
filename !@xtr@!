@@ -4,6 +4,12 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
     Icon = "rbxthumb://type=Asset&id=12361535956&w=150&h=150"})
 Duration = 16;
 
+game:GetService("StarterGui"):SetCore("SendNotification", { 
+    Title = "RTX GUI";
+    Text = "Credits to @Im_Patrick on Youtube!";
+    Icon = "rbxthumb://type=Asset&id=12361535956&w=150&h=150"})
+Duration = 16;
+
 -- Gui to Lua
 -- Version: 3.2
 
