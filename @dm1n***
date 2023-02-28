@@ -5394,7 +5394,7 @@ end)
 
 AddCommand("advertise", {}, "advertises the script", {}, function()
     local ChatRemote = Services.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest
-    ChatRemote.FireServer(ChatRemote, "ɪ ᴀᴍ ᴜꜱɪɴɢ ꜱx-ᴘ0ᴛ'ꜱ ᴀᴅᴍɪɴ, ᴅᴠꜱᴄʀᴅ.ɢɢ/ᴋᴍɴᴠᴢQɴ85ᴊ", "All");
+    ChatRemote.FireServer(ChatRemote, "I̾ ̾a̾m̾ ̾u̾s̾i̾n̾g̾ ̾S̾x̾p̾0̾t̾'̾s̾ ̾a̾d̾m̾i̾n̾,̾ ̾d̾v̾s̾c̾r̾d̾.̾g̾g̾/̾k̾m̾n̾V̾z̾Q̾n̾8̾5̾j̾", "All");
 end)
 
 AddCommand("joinserver", {"discord"}, "joins my discord server", {}, function()
