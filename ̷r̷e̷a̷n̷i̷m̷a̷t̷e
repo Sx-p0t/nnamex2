@@ -1,0 +1,146 @@
+local TService = game:GetService("TweenService")
+
+local IntroBlur = Instance.new("BlurEffect", game.Lighting)
+IntroBlur.Size = 0
+local Goal = {}
+Goal.Size = 56
+local Tween = TService:Create(IntroBlur, TweenInfo.new(3, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), Goal)
+Tween:Play()
+
+workspace.Camera.CameraType = "Fixed"
+game:GetService("Players").LocalPlayer["Character"].Archivable = true
+game:GetService("Players").LocalPlayer["Character"].Humanoid.WalkSpeed = 0
+game:GetService("Players").LocalPlayer["Character"].Humanoid.JumpPower = 0
+game:GetService("Players").LocalPlayer["Character"].Humanoid.AutoRotate = false
+GUI = Instance.new("ScreenGui", game.CoreGui)
+MainFrame = Instance.new("Frame", GUI)
+MainFrame.Name = "MainFrame"
+MainFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.5, -175, 0, 50)
+MainFrame.Size = UDim2.new(0, 0, 0, 80)
+TextLabel = Instance.new("TextLabel", MainFrame)
+TextLabel.Name = "TextLabel"
+TextLabel.BackgroundTransparency = 1
+TextLabel.Position = UDim2.new(0, 0, 0.5, -15)
+TextLabel.Size = UDim2.new(1, 0, 0, 30)
+TextLabel.Font = Enum.Font.SourceSansLight
+TextLabel.Text = ""
+TextLabel.TextColor3 = Color3.fromRGB(236, 240, 241)
+TextLabel.TextScaled = true
+TextBar = Instance.new("Frame", MainFrame)
+TextBar.Name = "Bar"
+TextBar.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+TextBar.BorderSizePixel = 0
+TextBar.Position = UDim2.new(0, 0, 1, 0)
+TextBar.Size = UDim2.new(1, 0, 0, 0)
+TextBar.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+MainFrame:TweenSize(UDim2.new(0, 350, 0, 80), "Out", "Sine", 0.5)
+wait(1)
+TextBar:TweenSizeAndPosition(UDim2.new(1, 0, 0, 5), UDim2.new(0, 0, 1, -5), "Out", "Sine", 0.1)
+local a = "  Reanimation Script by Sx-p0t#8992  "
+local b = string.len(a)
+for c = 1, b do
+    TextLabel.Text = string.sub(a, 1, c)
+    wait(0.01)
+end
+local Goal = {}
+Goal.Size = 0
+local Tween = TService:Create(IntroBlur, TweenInfo.new(7, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), Goal)
+Tween:Play()
+wait(5.65)
+
+workspace.Camera.CameraType = "Track"
+
+local function invisCam()
+    game:GetService("Players").LocalPlayer.DevCameraOcclusionMode = "Invisicam"
+end
+invisCam()
+game:GetService("Players").LocalPlayer:GetPropertyChangedSignal("DevCameraOcclusionMode"):Connect(invisCam)
+
+MainFrame:TweenPosition(UDim2.new(0.5, -175, -1, 0), "Out", "Sine", 0.5)
+TextBar.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+MainFrame:TweenSize(UDim2.new(0, 350, 0, 80), "Out", "Sine", 0.5)
+wait()
+TextBar:TweenSizeAndPosition(UDim2.new(1, 0, 0, 5), UDim2.new(0, 0, 1, -5), "Out", "Sine", 0.1)
+GUI:Destroy()
+
+game:GetService("Players").LocalPlayer["Character"].Archivable = false
+game:GetService("Players").LocalPlayer["Character"].Humanoid.WalkSpeed = 16
+game:GetService("Players").LocalPlayer["Character"].Humanoid.JumpPower = 50
+game:GetService("Players").LocalPlayer["Character"].Humanoid.AutoRotate = true
+game:GetService("Players").LocalPlayer["Character"].Animate:Destroy()
+game:GetService("Players").LocalPlayer["Character"].Humanoid.Animator:Destroy()
+game:GetService("Players").LocalPlayer["Character"].Humanoid.Health = 0.0000000000000001
+
+local FlingPart = Instance.new("Part")
+FlingPart.Parent = game.Players.LocalPlayer.Character
+FlingPart.Name = "FlingPart"
+FlingPart.CanCollide = false
+FlingPart.Anchored = true
+FlingPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+FlingPart.Size = game.Players.LocalPlayer.Character.HumanoidRootPart.Size
+
+local flinging = true
+local RunService = game:GetService("RunService")
+local Fling = "True"
+
+local propeller = game.Players.LocalPlayer.Character.FlingPart
+--propeller:FindFirstChildOfClass("Weld"):Destroy()
+propeller.Anchored = true
+local ROTATE_SPEED = 1000
+
+RunService.Heartbeat:Connect(function(step)
+    for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
+    if v:IsA("BasePart") and v.Name ~="HumanoidRootPart" then 
+    game:GetService("RunService").Heartbeat:connect(function()
+    v.Velocity = Vector3.new(-30,0,0)
+    end)
+    end
+    end
+    --game.Players.LocalPlayer.Character.FlingPart.Handle.CFrame = game.Players.LocalPlayer.Character.Torso.CFrame
+	local rotationAmount = math.rad(ROTATE_SPEED * step)
+	propeller.CFrame = propeller.CFrame * CFrame.Angles(rotationAmount, rotationAmount, rotationAmount)
+end)
+
+--[[RunService.Heartbeat:Connect(function(step)
+    wait(2)
+    game.Players.LocalPlayer.Character.FlingPart.CFrame = game.Players.LocalPlayer.Character.Torso.CFrame
+end)--]]
+
+local Plr = game:GetService("Players").LocalPlayer
+local Mouse = Plr:GetMouse()
+ 
+fling = function()
+Plr.Character.FlingPart.CFrame = Mouse.Hit
+flinging = false
+wait(0.5)
+--repeat Plr.Character.FlingPart.Handle.CFrame = Plr.Character.Torso.CFrame wait() until flinging == true
+--wait(0.5)
+flinging = true
+end
+
+Plr.Character.Humanoid.Died:Connect(function()
+   local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Rejoin = coroutine.create(function()
+    local Success, ErrorMessage = pcall(function()
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end)
+
+    if ErrorMessage and not Success then
+        warn(ErrorMessage)
+    end
+end)
+
+coroutine.resume(Rejoin)
+end)
+
+--[[Mouse.Button1Down:connect(function()
+Plr.Character:MoveTo(Mouse.Hit.p)
+end)--]]
+Plr:GetMouse().Button1Down:Connect(fling)
+
+repeat game.Players.LocalPlayer.Character.FlingPart.CFrame = game.Players.LocalPlayer.Character.Torso.CFrame wait(0.2) until Fling == "false"
